@@ -1,48 +1,117 @@
 <!doctype html>
 <html lang="az">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Roman, klassika, fantastika və daha çox janrda seçilmiş kitablar.">
-  <meta property="og:title" content="Məsud Kitab Evi">
-  <meta property="og:description" content="Hər səhifədə yeni bir dünya">
-  <meta property="og:image" content="og.png">
-  <title>Məsud Kitab Evi — Kitabını kəşf et</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="KitabEvi - genis kitab kataloqu, axtaris, filtr, sebet ve sevimliler.">
+  <meta name="theme-color" content="#111827">
+  <title>KitabEvi | Onlayn kitab magazasi</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main>
-    <header class="site-header">
-      <a href="#top" class="brand" aria-label="Məsud Kitab Evi ana səhifə"><span class="brand-mark">M</span><span><strong>MƏSUD</strong><small>KİTAB EVİ</small></span></a>
-      <nav aria-label="Əsas menyu"><a href="#kitablar">Kitablar</a><a href="#janrlar">Janrlar</a><a href="#haqqimizda">Haqqımızda</a></nav>
-      <button class="cart-button" id="open-cart" type="button"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg><span>Səbət</span><b id="cart-count">0</b></button>
-    </header>
+  <div class="topline"><div class="container top-inner"><span>50 AZN-den yuxari sifarise catdirilma pulsuzdur</span><div><button class="text-btn" id="shareBtn">Sayti paylas</button><button class="text-btn" id="themeBtn" aria-label="Tema">Tema</button></div></div></div>
 
-    <section class="hero" id="top">
-      <div class="hero-copy">
-        <p class="eyebrow"><svg viewBox="0 0 24 24"><path d="m12 3 1.4 4.1L17 9l-3.6 1.9L12 15l-1.4-4.1L7 9l3.6-1.9L12 3Z"/></svg> HƏR SƏHİFƏDƏ YENİ BİR DÜNYA</p>
-        <h1>Oxumağa dəyər<br><em>hekayələr burada.</em></h1>
-        <p class="hero-text">Sevdiyiniz müəllifləri kəşf edin, yeni kitabınızı seçin və oxumağın zövqünü yenidən yaşayın.</p>
-        <div class="hero-actions"><a class="primary-button" href="#kitablar">Kitablara bax <span>→</span></a><span><b>36</b><small>kitab seçimi</small></span><span><b>11</b><small>janr</small></span></div>
+  <header class="site-header">
+    <div class="container header-main">
+      <a class="logo" href="#home" aria-label="Ana sehife"><span>KITAB</span>EVI</a>
+      <button class="catalog-btn" id="catalogBtn" aria-expanded="false">☰ Kataloq</button>
+      <div class="search-wrap">
+        <input id="searchInput" type="search" placeholder="Kitab, muellif ve ya janr axtar..." autocomplete="off">
+        <button id="searchBtn" aria-label="Axtar">⌕</button>
+        <div class="search-suggest" id="searchSuggest"></div>
       </div>
-      <div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="quote-card"><span>“</span>Yaxşı kitab insanın ən səssiz dostudur.</div><div class="book-stack"><i></i><i></i><i></i><i></i></div><div class="leaf leaf-one"></div><div class="leaf leaf-two"></div></div>
+      <div class="head-actions">
+        <button class="icon-btn" id="favBtn" title="Sevimliler">♡<span id="favCount">0</span></button>
+        <button class="icon-btn" id="cartBtn" title="Sebet">🛒<span id="cartCount">0</span></button>
+      </div>
+    </div>
+    <nav class="container nav-row">
+      <a href="#home" data-nav="all">Ana sehife</a>
+      <a href="#books" data-nav="all">Butun kitablar</a>
+      <a href="#books" data-nav="new">Yeni gelenler</a>
+      <a href="#books" data-nav="bestseller">Bestseller</a>
+      <a href="#books" data-nav="discount">Endirimler</a>
+      <a href="#genres">Janrlar</a>
+    </nav>
+    <div class="catalog-panel" id="catalogPanel">
+      <div class="container catalog-grid"><button data-category="Bioqrafiya">Bioqrafiya</button><button data-category="Biznes">Biznes</button><button data-category="Detektiv">Detektiv</button><button data-category="Elm">Elm</button><button data-category="Fantastika">Fantastika</button><button data-category="Klassikler">Klassikler</button><button data-category="Psixologiya">Psixologiya</button><button data-category="Roman">Roman</button><button data-category="Sexsi inkisaf">Sexsi inkisaf</button><button data-category="Tarix">Tarix</button><button data-category="Usaq">Usaq</button></div>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero container">
+      <div class="hero-main">
+        <span class="eyebrow">YENI KOLLEKSIYA</span>
+        <h1>Oxumaq ucun yeni bir sebeb tap.</h1>
+        <p>Meshur klassiklerden yeni bestsellerlere qeder genis secim. Axtar, muqayise et, sevimlilere elave et ve sebetini rahat idare et.</p>
+        <div class="hero-actions"><a class="btn primary" href="#books">Kitablara bax</a><button class="btn secondary" id="randomBtn">Tesadufi kitab</button></div>
+        <div class="hero-stats"><div><b>512+</b><span>kitab</span></div><div><b>11</b><span>janr</span></div><div><b>real</b><span>uz qabiqlari</span></div></div>
+      </div>
+      <div class="hero-side">
+        <div class="promo-card"><span>HEFTENIN SECIMI</span><h3>Atomic Habits</h3><p>Kicik verdislerden boyuk neticelere.</p><button data-open-book="41">Etrafli bax</button></div>
+        <div class="promo-card alt"><span>KLASSIK</span><h3>1984</h3><p>Her dovrun en cox danisilan romanlarindan biri.</p><button data-open-book="1">Etrafli bax</button></div>
+      </div>
     </section>
 
-    <section class="catalog" id="kitablar">
-      <div class="section-heading"><div><p class="eyebrow">KATALOQ</p><h2>Sənin üçün seçdik</h2></div><p>Ən çox oxunan, sevilən və yeni gələn kitablar bir arada.</p></div>
-      <div class="catalog-tools" id="janrlar">
-        <label class="search-box"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="search" placeholder="Kitab və ya müəllif axtar..."></label>
-        <div class="genre-list" id="genres" role="group" aria-label="Janra görə süzgəc"></div>
-      </div>
-      <div class="results-row"><span id="result-count"></span><label class="sort-box"><span>Sıralama:</span><select id="sort"><option value="popular">Populyarlığa görə</option><option value="price-low">Əvvəl ucuz</option><option value="price-high">Əvvəl baha</option><option value="name">Ada görə</option></select></label></div>
-      <div class="book-grid" id="book-grid"></div>
-      <div class="empty" id="empty" hidden><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><h3>Nəticə tapılmadı</h3><p>Axtarış sözünü və ya janrı dəyişin.</p><button id="clear-filter">Filtrləri təmizlə</button></div>
+    <section class="container trust-row">
+      <div><b>✓</b><span><strong>Tehlukesiz interfeys</strong><small>Melumatlar brauzerde saxlanir</small></span></div>
+      <div><b>↻</b><span><strong>Suretli filtr</strong><small>Janr, dil, qiymet ve reytinq</small></span></div>
+      <div><b>♡</b><span><strong>Sevimliler</strong><small>Sonra baxmaq ucun yadda saxla</small></span></div>
+      <div><b>▣</b><span><strong>Mobil uyumludur</strong><small>Telefon ve kompyuterde rahatdir</small></span></div>
     </section>
 
-    <section class="about-strip" id="haqqimizda"><p>MƏSUD KİTAB EVİ</p><h2>Bir kitab seç.<br>Yeni bir dünyaya başla.</h2><a href="#kitablar">Kataloqa keç <span>→</span></a></section>
-    <footer><a class="brand" href="#top"><span class="brand-mark">M</span><span><strong>MƏSUD</strong><small>KİTAB EVİ</small></span></a><p>Kitab sevənlərin görüş yeri.</p><span>© 2026 Məsud Kitab Evi</span></footer>
+    <section class="container section" id="genres">
+      <div class="section-head"><div><span class="kicker">KATEQORIYALAR</span><h2>Janra gore sec</h2></div><button class="link-btn" id="clearGenre">Hamisi</button></div>
+      <div class="chips"><button class="chip" data-category="Bioqrafiya">Bioqrafiya</button><button class="chip" data-category="Biznes">Biznes</button><button class="chip" data-category="Detektiv">Detektiv</button><button class="chip" data-category="Elm">Elm</button><button class="chip" data-category="Fantastika">Fantastika</button><button class="chip" data-category="Klassikler">Klassikler</button><button class="chip" data-category="Psixologiya">Psixologiya</button><button class="chip" data-category="Roman">Roman</button><button class="chip" data-category="Sexsi inkisaf">Sexsi inkisaf</button><button class="chip" data-category="Tarix">Tarix</button><button class="chip" data-category="Usaq">Usaq</button></div>
+    </section>
+
+    <section class="container section" id="books">
+      <div class="section-head books-head"><div><span class="kicker">KATALOQ</span><h2 id="catalogTitle">Butun kitablar</h2><p id="resultInfo"></p></div>
+      <button class="filter-toggle" id="filterToggle">Filtrler</button></div>
+
+      <div class="catalog-layout">
+        <aside class="filters" id="filters">
+          <div class="filter-head"><h3>Filtrler</h3><button id="resetFilters">Sifirla</button></div>
+          <label>Janr<select id="categoryFilter"><option value="all">Butun janrlar</option><option value="Bioqrafiya">Bioqrafiya</option><option value="Biznes">Biznes</option><option value="Detektiv">Detektiv</option><option value="Elm">Elm</option><option value="Fantastika">Fantastika</option><option value="Klassikler">Klassikler</option><option value="Psixologiya">Psixologiya</option><option value="Roman">Roman</option><option value="Sexsi inkisaf">Sexsi inkisaf</option><option value="Tarix">Tarix</option><option value="Usaq">Usaq</option></select></label>
+          <label>Dil<select id="langFilter"><option value="all">Butun diller</option><option>AZ</option><option>TR</option><option>EN</option><option>RU</option></select></label>
+          <label>Maksimum qiymet <span id="priceLabel">40 AZN</span><input id="priceFilter" type="range" min="8" max="40" step="1" value="40"></label>
+          <label>Minimum reytinq<select id="ratingFilter"><option value="0">Ferqi yoxdur</option><option value="4">4.0+</option><option value="4.5">4.5+</option><option value="4.8">4.8+</option></select></label>
+          <label class="check"><input id="stockFilter" type="checkbox"> Yalniz stokda olanlar</label>
+          <label class="check"><input id="discountFilter" type="checkbox"> Yalniz endirimli kitablar</label>
+        </aside>
+
+        <div class="catalog-content">
+          <div class="catalog-toolbar">
+            <div class="view-tabs"><button class="active" data-view="grid">▦</button><button data-view="list">☷</button></div>
+            <select id="sortSelect"><option value="popular">Populyar</option><option value="rating">Reytinq</option><option value="low">Qiymet: asagidan</option><option value="high">Qiymet: yuxaridan</option><option value="az">Ada gore A-Z</option></select>
+          </div>
+          <div class="book-grid" id="bookGrid"></div>
+          <div class="empty" id="emptyState"><div>⌕</div><h3>Netice tapilmadi</h3><p>Filtrleri deyis ve ya ferqli soz axtar.</p></div>
+          <div class="pagination" id="pagination"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container section recent-section" id="recentSection">
+      <div class="section-head"><div><span class="kicker">TARIXCE</span><h2>Son baxilanlar</h2></div><button class="link-btn" id="clearRecent">Temizle</button></div>
+      <div class="mini-grid" id="recentGrid"></div>
+    </section>
+
+    <section class="newsletter">
+      <div class="container newsletter-inner"><div><span class="kicker">XEBERLER</span><h2>Yeni kitab ve endirimlerden xeberdar ol</h2><p>E-poctunu daxil et. Bu demo versiyada melumat yalniz senin brauzerinde saxlanir.</p></div><form id="newsletterForm"><input type="email" id="newsletterEmail" placeholder="E-poct unvani" required><button class="btn primary">Abune ol</button></form></div>
+    </section>
   </main>
-  <div id="cart-root"></div>
+
+  <footer><div class="container footer-grid"><div><a class="logo footer-logo" href="#home"><span>KITAB</span>EVI</a><p>Oxucular ucun sade, suretli ve funksional kitab vitrini.</p></div><div><h4>Bolmeler</h4><a href="#books">Kitablar</a><a href="#genres">Janrlar</a><a href="#books" data-nav="new">Yeni gelenler</a></div><div><h4>Komek</h4><a href="#">Catdirilma</a><a href="#">Odenis</a><a href="#">FAQ</a></div><div><h4>Elaqe</h4><p>+994 00 000 00 00</p><p>info@kitabevi.az</p></div></div><div class="container copyright">© 2026 KitabEvi. Butun huquqlar qorunur.</div></footer>
+
+  <div class="drawer-backdrop" id="backdrop"></div>
+  <aside class="drawer" id="cartDrawer"><div class="drawer-head"><h3>Sebet</h3><button data-close-drawer>×</button></div><div class="drawer-body" id="cartItems"></div><div class="drawer-foot"><div class="total-row"><span>Umumi</span><b id="cartTotal">0.00 AZN</b></div><button class="btn primary full" id="checkoutBtn">Sifarisi tamamla</button><button class="btn secondary full" id="clearCart">Sebeti temizle</button></div></aside>
+  <aside class="drawer" id="favDrawer"><div class="drawer-head"><h3>Sevimliler</h3><button data-close-drawer>×</button></div><div class="drawer-body" id="favItems"></div></aside>
+
+  <div class="modal" id="bookModal" aria-hidden="true"><div class="modal-card book-modal-card"><button class="modal-close" data-close-modal>×</button><div id="bookModalContent"></div></div></div>
+  <div class="modal" id="checkoutModal" aria-hidden="true"><div class="modal-card checkout-card"><button class="modal-close" data-close-modal>×</button><h2>Sifarisi tamamla</h2><p class="muted">Bu statik demo sifarisi servere gondermir. Forma funksionalligi numune ucundur.</p><form id="checkoutForm" class="checkout-form"><label>Ad ve soyad<input required name="name"></label><label>Telefon<input required name="phone" placeholder="+994..."></label><label>Seher<select name="city"><option>Baki</option><option>Naxcivan</option><option>Gence</option><option>Sumqayit</option><option>Diger</option></select></label><label>Catdirilma unvani<textarea required name="address" rows="3"></textarea></label><label>Odenis<select name="payment"><option>Qapida odenis</option><option>Kartla odenis (demo)</option></select></label><button class="btn primary full">Sifarisi tesdiqle</button></form></div></div>
+  <div class="toast" id="toast"></div>
+
   <script src="script.js"></script>
 </body>
 </html>
