@@ -6,14 +6,23 @@
   <meta name="description" content="KitabEvi - genis kitab kataloqu, axtaris, filtr, sebet ve sevimliler.">
   <meta name="theme-color" content="#111827">
   <title>KitabEvi | Onlayn kitab magazasi</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260830-final4">
+
+  <style id="catalog-layout-fix">
+    body.catalog-mode .hero,
+    body.catalog-mode .trust-row,
+    body.catalog-mode #genres { display:none !important; }
+    body.genre-mode .hero,
+    body.genre-mode .trust-row { display:none !important; }
+    body.genre-mode #genres { display:block !important; }
+  </style>
 </head>
-<body>
+<body class="catalog-mode">
   <div class="topline"><div class="container top-inner"><span>50 AZN-den yuxari sifarise catdirilma pulsuzdur</span><div><button class="text-btn" id="shareBtn">Sayti paylas</button><button class="text-btn" id="themeBtn" aria-label="Tema">Tema</button></div></div></div>
 
   <header class="site-header">
     <div class="container header-main">
-      <a class="logo" href="#home" aria-label="Ana sehife"><span>KITAB</span>EVI</a>
+      <a class="logo" href="#books" aria-label="Ana sehife"><span>KITAB</span>EVI</a>
       <button class="catalog-btn" id="catalogBtn" aria-expanded="false">☰ Kataloq</button>
       <div class="search-wrap">
         <input id="searchInput" type="search" placeholder="Kitab, muellif ve ya janr axtar..." autocomplete="off">
@@ -26,7 +35,7 @@
       </div>
     </div>
     <nav class="container nav-row">
-      <a href="#home" data-nav="all">Ana sehife</a>
+      <a href="#books" data-nav="all">Ana sehife</a>
       <a href="#books" data-nav="all">Butun kitablar</a>
       <a href="#books" data-nav="new">Yeni gelenler</a>
       <a href="#books" data-nav="bestseller">Bestseller</a>
@@ -102,7 +111,7 @@
     </section>
   </main>
 
-  <footer><div class="container footer-grid"><div><a class="logo footer-logo" href="#home"><span>KITAB</span>EVI</a><p>Oxucular ucun sade, suretli ve funksional kitab vitrini.</p></div><div><h4>Bolmeler</h4><a href="#books">Kitablar</a><a href="#genres">Janrlar</a><a href="#books" data-nav="new">Yeni gelenler</a></div><div><h4>Komek</h4><a href="#">Catdirilma</a><a href="#">Odenis</a><a href="#">FAQ</a></div><div><h4>Elaqe</h4><p>+994 00 000 00 00</p><p>info@kitabevi.az</p></div></div><div class="container copyright">© 2026 KitabEvi. Butun huquqlar qorunur.</div></footer>
+  <footer><div class="container footer-grid"><div><a class="logo footer-logo" href="#books"><span>KITAB</span>EVI</a><p>Oxucular ucun sade, suretli ve funksional kitab vitrini.</p></div><div><h4>Bolmeler</h4><a href="#books">Kitablar</a><a href="#genres">Janrlar</a><a href="#books" data-nav="new">Yeni gelenler</a></div><div><h4>Komek</h4><a href="#">Catdirilma</a><a href="#">Odenis</a><a href="#">FAQ</a></div><div><h4>Elaqe</h4><p>+994 00 000 00 00</p><p>info@kitabevi.az</p></div></div><div class="container copyright">© 2026 KitabEvi. Butun huquqlar qorunur.</div></footer>
 
   <div class="drawer-backdrop" id="backdrop"></div>
   <aside class="drawer" id="cartDrawer"><div class="drawer-head"><h3>Sebet</h3><button data-close-drawer>×</button></div><div class="drawer-body" id="cartItems"></div><div class="drawer-foot"><div class="total-row"><span>Umumi</span><b id="cartTotal">0.00 AZN</b></div><button class="btn primary full" id="checkoutBtn">Sifarisi tamamla</button><button class="btn secondary full" id="clearCart">Sebeti temizle</button></div></aside>
@@ -112,6 +121,48 @@
   <div class="modal" id="checkoutModal" aria-hidden="true"><div class="modal-card checkout-card"><button class="modal-close" data-close-modal>×</button><h2>Sifarisi tamamla</h2><p class="muted">Bu statik demo sifarisi servere gondermir. Forma funksionalligi numune ucundur.</p><form id="checkoutForm" class="checkout-form"><label>Ad ve soyad<input required name="name"></label><label>Telefon<input required name="phone" placeholder="+994..."></label><label>Seher<select name="city"><option>Baki</option><option>Naxcivan</option><option>Gence</option><option>Sumqayit</option><option>Diger</option></select></label><label>Catdirilma unvani<textarea required name="address" rows="3"></textarea></label><label>Odenis<select name="payment"><option>Qapida odenis</option><option>Kartla odenis (demo)</option></select></label><button class="btn primary full">Sifarisi tesdiqle</button></form></div></div>
   <div class="toast" id="toast"></div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=20260830-final4"></script>
+
+  <script>
+  (function(){
+    const $q=(s)=>document.querySelector(s);
+    function setLayout(mode){
+      document.body.classList.remove('catalog-mode','genre-mode');
+      if(mode==='genres'){
+        document.body.classList.add('genre-mode');
+        requestAnimationFrame(()=>{
+          const el=$q('#genres');
+          if(el) el.scrollIntoView({behavior:'auto',block:'start'});
+        });
+      }else{
+        document.body.classList.add('catalog-mode');
+        requestAnimationFrame(()=>{
+          const el=$q('#books');
+          if(el) el.scrollIntoView({behavior:'auto',block:'start'});
+        });
+      }
+    }
+    function applyRoute(){
+      const h=location.hash;
+      if(h==='#genres'){
+        setLayout('genres');
+        return;
+      }
+      setLayout('catalog');
+      if(!h || h==='#home') history.replaceState(null,'','#books');
+    }
+    applyRoute();
+    window.addEventListener('hashchange',()=>setTimeout(applyRoute,0));
+    window.addEventListener('popstate',()=>setTimeout(applyRoute,0));
+    document.addEventListener('click',(e)=>{
+      const nav=e.target.closest('[data-nav]');
+      if(nav) setTimeout(()=>setLayout('catalog'),0);
+      const g=e.target.closest('a[href="#genres"]');
+      if(g) setTimeout(()=>setLayout('genres'),0);
+      const home=e.target.closest('a.logo, a[href="#books"]');
+      if(home && !g) setTimeout(()=>setLayout('catalog'),0);
+    });
+  })();
+  </script>
 </body>
 </html>
