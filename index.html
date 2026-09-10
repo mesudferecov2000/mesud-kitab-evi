@@ -6,8 +6,7 @@
   <meta name="description" content="KitabEvi - genis kitab kataloqu, axtaris, filtr, sebet ve sevimliler.">
   <meta name="theme-color" content="#111827">
   <title>KitabEvi | Onlayn kitab magazasi</title>
-    <link rel="stylesheet" href="style.css?v=20260830-final4">
-
+  <link rel="stylesheet" href="https://mesudferecov2000.github.io/mesud-kitab-evi/style.css?v=20260910-fixed1">
   <style id="catalog-layout-fix">
     body.catalog-mode .hero,
     body.catalog-mode .trust-row,
@@ -16,10 +15,226 @@
     body.genre-mode .trust-row { display:none !important; }
     body.genre-mode #genres { display:block !important; }
   </style>
+
+  <!-- Yalniz olcu + yan funksionalliq elaveleri -->
+  <style id="mesud-size-and-side-tools">
+    /* Kohne style.css-de kompyuter ucun verilen zoom:.55-i legv edir.
+       Belece Butun kitablar / Yeni gelenler / Bestseller / Endirimler
+       bolmelerinde kartlar normal ve eyni miqyasda gorunur. */
+    @media (min-width:700px){
+      body{zoom:1 !important;}
+    }
+
+    /* Esas kataloqun oz dizaynina toxunmadan yalniz genis ekranlarda yan alətlər. */
+    .side-rail{display:none;}
+    @media (min-width:1700px){
+      .side-rail{
+        display:flex;
+        position:fixed;
+        top:176px;
+        width:220px;
+        max-height:calc(100vh - 196px);
+        overflow:auto;
+        flex-direction:column;
+        gap:12px;
+        z-index:20;
+        scrollbar-width:thin;
+      }
+      .side-rail-left{left:calc((100vw - 1200px)/2 - 240px);}
+      .side-rail-right{right:calc((100vw - 1200px)/2 - 240px);}
+      .side-tool-box,
+      .side-book-box{
+        background:var(--card);
+        color:var(--text);
+        border:1px solid var(--line);
+        border-radius:16px;
+        box-shadow:0 10px 28px rgba(15,23,42,.06);
+        overflow:hidden;
+      }
+      .side-tool-head{
+        padding:12px 14px 9px;
+        color:var(--accent);
+        font-size:10px;
+        font-weight:900;
+        letter-spacing:1.2px;
+        text-transform:uppercase;
+      }
+      .side-tool-btn,
+      .side-tool-link{
+        width:100%;
+        min-height:42px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:10px;
+        padding:10px 14px;
+        border:0;
+        border-top:1px solid var(--line);
+        background:transparent;
+        color:var(--text);
+        text-decoration:none;
+        font-size:13px;
+        font-weight:750;
+        text-align:left;
+      }
+      .side-tool-btn:hover,
+      .side-tool-link:hover{
+        background:var(--soft);
+        color:var(--accent);
+      }
+      .side-count{
+        min-width:23px;
+        height:23px;
+        padding:0 6px;
+        display:grid;
+        place-items:center;
+        border-radius:999px;
+        background:var(--soft);
+        color:var(--accent);
+        font-size:11px;
+        font-weight:900;
+      }
+      .side-book-box{
+        padding:12px;
+        text-align:left;
+        cursor:pointer;
+      }
+      .side-book-box img{
+        width:100%;
+        aspect-ratio:2/3;
+        object-fit:cover;
+        display:block;
+        border-radius:11px;
+        background:#e5e7eb;
+      }
+      .side-book-box small{
+        display:block;
+        margin-top:10px;
+        color:var(--accent);
+        font-size:10px;
+        font-weight:900;
+        letter-spacing:1px;
+      }
+      .side-book-box strong{
+        display:block;
+        margin-top:4px;
+        font-size:14px;
+        line-height:1.25;
+      }
+      .side-book-box span{
+        display:block;
+        margin-top:3px;
+        color:var(--muted);
+        font-size:11px;
+      }
+      .side-stats{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+        padding:12px;
+        border-top:1px solid var(--line);
+      }
+      .side-stat{
+        padding:9px;
+        border-radius:10px;
+        background:var(--bg);
+        text-align:center;
+      }
+      .side-stat b{display:block;font-size:16px;}
+      .side-stat span{display:block;color:var(--muted);font-size:10px;}
+    }
+  </style>
+
+  <!-- Endirimler ve Janrlardaki kitab karti olcusunu butun kataloq goruntulerinde eyni saxlayir -->
+  <style id="mesud-equal-book-card-size">
+    /* Ana sehife / Butun kitablar / Yeni gelenler / Bestseller / Endirimler / Janr secimi
+       hamisinda eyni grid ve eyni kart olcusu. */
+    #books .catalog-content{min-width:0;}
+    #books .book-grid:not(.list){
+      grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+      gap:16px !important;
+      width:100% !important;
+    }
+    #books .book-grid:not(.list) .book-card{
+      width:100% !important;
+      min-width:0 !important;
+      max-width:none !important;
+    }
+    #books .book-grid:not(.list) .cover-wrap{
+      width:100% !important;
+      aspect-ratio:2/3 !important;
+    }
+    @media (max-width:1020px){
+      #books .book-grid:not(.list){grid-template-columns:repeat(3,minmax(0,1fr)) !important;}
+    }
+    @media (max-width:780px){
+      #books .book-grid:not(.list){grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+    }
+  </style>
+
+  <style id="mesud-sticky-sidebars-final">
+    /*
+      DÜZƏLİŞ:
+      Filtr, Sürətli keçid və Sürətli alətlər səhifəni aşağı sürüşdürəndə
+      ekranla birlikdə aşağı getməsin. Öz ilkin yerində qalsın.
+    */
+
+    /* Filtr normal kataloq yerində qalır — sticky/fixed deyil. */
+    @media (min-width:781px){
+      #books .catalog-layout{
+        align-items:start !important;
+      }
+      #books .filters{
+        position:static !important;
+        top:auto !important;
+        left:auto !important;
+        right:auto !important;
+        bottom:auto !important;
+        align-self:start !important;
+        height:auto !important;
+        max-height:none !important;
+        overflow:visible !important;
+        transform:none !important;
+        z-index:auto !important;
+      }
+    }
+
+    /*
+      Yan menyular sənədin yuxarı hissəsində öz yerində dayanır.
+      Səhifə aşağı enəndə onlar istifadəçinin arxasınca gəlmir.
+    */
+    @media (min-width:1450px){
+      .side-rail{
+        display:flex !important;
+        position:absolute !important;
+        top:176px !important;
+        bottom:auto !important;
+        width:220px !important;
+        max-height:none !important;
+        overflow:visible !important;
+        transform:none !important;
+        flex-direction:column !important;
+        gap:12px !important;
+        z-index:20 !important;
+      }
+      .side-rail-left{
+        left:max(8px, calc((100vw - 1200px)/2 - 240px)) !important;
+        right:auto !important;
+      }
+      .side-rail-right{
+        right:max(8px, calc((100vw - 1200px)/2 - 240px)) !important;
+        left:auto !important;
+      }
+      .side-book-box,
+      .side-stats{
+        display:none !important;
+      }
+    }
+  </style>
+
 </head>
 <body class="catalog-mode">
   <div class="topline"><div class="container top-inner"><span>50 AZN-den yuxari sifarise catdirilma pulsuzdur</span><div><button class="text-btn" id="shareBtn">Sayti paylas</button><button class="text-btn" id="themeBtn" aria-label="Tema">Tema</button></div></div></div>
-
   <header class="site-header">
     <div class="container header-main">
       <a class="logo" href="#books" aria-label="Ana sehife"><span>KITAB</span>EVI</a>
@@ -47,6 +262,30 @@
     </div>
   </header>
 
+  <!-- Genis ekranda sol terefde suretli kecidler -->
+  <aside class="side-rail side-rail-left" aria-label="Suretli kecidler">
+    <div class="side-tool-box">
+      <div class="side-tool-head">Suretli kecid</div>
+      <button class="side-tool-btn" data-nav="all"><span>Butun kitablar</span><span>›</span></button>
+      <button class="side-tool-btn" data-nav="new"><span>Yeni gelenler</span><span>›</span></button>
+      <button class="side-tool-btn" data-nav="bestseller"><span>Bestseller</span><span>›</span></button>
+      <button class="side-tool-btn" data-nav="discount"><span>Endirimler</span><span>›</span></button>
+      <a class="side-tool-link" href="#genres"><span>Janrlar</span><span>›</span></a>
+    </div>
+  </aside>
+
+  <!-- Genis ekranda sag terefde suretli alətlər -->
+  <aside class="side-rail side-rail-right" aria-label="Suretli alətlər">
+    <div class="side-tool-box">
+      <div class="side-tool-head">Suretli alətlər</div>
+      <button class="side-tool-btn" type="button" data-side-action="fav"><span>♡ Sevimliler</span><span class="side-count" id="sideFavCount">0</span></button>
+      <button class="side-tool-btn" type="button" data-side-action="cart"><span>🛒 Sebet</span><span class="side-count" id="sideCartCount">0</span></button>
+      <button class="side-tool-btn" type="button" data-side-action="random"><span>↻ Tesadufi kitab</span><span>›</span></button>
+      <button class="side-tool-btn" type="button" data-side-action="share"><span>↗ Sayti paylas</span><span>›</span></button>
+      <button class="side-tool-btn" type="button" data-side-action="top"><span>↑ Yuxari</span><span>›</span></button>
+    </div>
+  </aside>
+
   <main id="home">
     <section class="hero container">
       <div class="hero-main">
@@ -54,30 +293,26 @@
         <h1>Oxumaq ucun yeni bir sebeb tap.</h1>
         <p>Meshur klassiklerden yeni bestsellerlere qeder genis secim. Axtar, muqayise et, sevimlilere elave et ve sebetini rahat idare et.</p>
         <div class="hero-actions"><a class="btn primary" href="#books">Kitablara bax</a><button class="btn secondary" id="randomBtn">Tesadufi kitab</button></div>
-        <div class="hero-stats"><div><b>512+</b><span>kitab</span></div><div><b>11</b><span>janr</span></div><div><b>real</b><span>uz qabiqlari</span></div></div>
+        <div class="hero-stats"><div><b>632+</b><span>kitab</span></div><div><b>11</b><span>janr</span></div><div><b>real</b><span>uz qabiqlari</span></div></div>
       </div>
       <div class="hero-side">
         <div class="promo-card"><span>HEFTENIN SECIMI</span><h3>Atomic Habits</h3><p>Kicik verdislerden boyuk neticelere.</p><button data-open-book="41">Etrafli bax</button></div>
         <div class="promo-card alt"><span>KLASSIK</span><h3>1984</h3><p>Her dovrun en cox danisilan romanlarindan biri.</p><button data-open-book="1">Etrafli bax</button></div>
       </div>
     </section>
-
     <section class="container trust-row">
       <div><b>✓</b><span><strong>Tehlukesiz interfeys</strong><small>Melumatlar brauzerde saxlanir</small></span></div>
       <div><b>↻</b><span><strong>Suretli filtr</strong><small>Janr, dil, qiymet ve reytinq</small></span></div>
       <div><b>♡</b><span><strong>Sevimliler</strong><small>Sonra baxmaq ucun yadda saxla</small></span></div>
       <div><b>▣</b><span><strong>Mobil uyumludur</strong><small>Telefon ve kompyuterde rahatdir</small></span></div>
     </section>
-
     <section class="container section" id="genres">
       <div class="section-head"><div><span class="kicker">KATEQORIYALAR</span><h2>Janra gore sec</h2></div><button class="link-btn" id="clearGenre">Hamisi</button></div>
       <div class="chips"><button class="chip" data-category="Bioqrafiya">Bioqrafiya</button><button class="chip" data-category="Biznes">Biznes</button><button class="chip" data-category="Detektiv">Detektiv</button><button class="chip" data-category="Elm">Elm</button><button class="chip" data-category="Fantastika">Fantastika</button><button class="chip" data-category="Klassikler">Klassikler</button><button class="chip" data-category="Psixologiya">Psixologiya</button><button class="chip" data-category="Roman">Roman</button><button class="chip" data-category="Sexsi inkisaf">Sexsi inkisaf</button><button class="chip" data-category="Tarix">Tarix</button><button class="chip" data-category="Usaq">Usaq</button></div>
     </section>
-
     <section class="container section" id="books">
       <div class="section-head books-head"><div><span class="kicker">KATALOQ</span><h2 id="catalogTitle">Butun kitablar</h2><p id="resultInfo"></p></div>
       <button class="filter-toggle" id="filterToggle">Filtrler</button></div>
-
       <div class="catalog-layout">
         <aside class="filters" id="filters">
           <div class="filter-head"><h3>Filtrler</h3><button id="resetFilters">Sifirla</button></div>
@@ -88,7 +323,6 @@
           <label class="check"><input id="stockFilter" type="checkbox"> Yalniz stokda olanlar</label>
           <label class="check"><input id="discountFilter" type="checkbox"> Yalniz endirimli kitablar</label>
         </aside>
-
         <div class="catalog-content">
           <div class="catalog-toolbar">
             <div class="view-tabs"><button class="active" data-view="grid">▦</button><button data-view="list">☷</button></div>
@@ -100,28 +334,222 @@
         </div>
       </div>
     </section>
-
     <section class="container section recent-section" id="recentSection">
       <div class="section-head"><div><span class="kicker">TARIXCE</span><h2>Son baxilanlar</h2></div><button class="link-btn" id="clearRecent">Temizle</button></div>
       <div class="mini-grid" id="recentGrid"></div>
     </section>
-
     <section class="newsletter">
       <div class="container newsletter-inner"><div><span class="kicker">XEBERLER</span><h2>Yeni kitab ve endirimlerden xeberdar ol</h2><p>E-poctunu daxil et. Bu demo versiyada melumat yalniz senin brauzerinde saxlanir.</p></div><form id="newsletterForm"><input type="email" id="newsletterEmail" placeholder="E-poct unvani" required><button class="btn primary">Abune ol</button></form></div>
     </section>
   </main>
-
-  <footer><div class="container footer-grid"><div><a class="logo footer-logo" href="#books"><span>KITAB</span>EVI</a><p>Oxucular ucun sade, suretli ve funksional kitab vitrini.</p></div><div><h4>Bolmeler</h4><a href="#books">Kitablar</a><a href="#genres">Janrlar</a><a href="#books" data-nav="new">Yeni gelenler</a></div><div><h4>Komek</h4><a href="#">Catdirilma</a><a href="#">Odenis</a><a href="#">FAQ</a></div><div><h4>Elaqe</h4><p>+994 00 000 00 00</p><p>info@kitabevi.az</p></div></div><div class="container copyright">© 2026 KitabEvi. Butun huquqlar qorunur.</div></footer>
-
+  <footer><div class="container footer-grid"><div><a class="logo footer-logo" href="#books"><span>KITAB</span>EVI</a><p>Oxucular ucun sade, suretli ve funksional kitab vitrini.</p></div><div><h4>Bolmeler</h4><a href="#books">Kitablar</a><a href="#genres">Janrlar</a><a href="#books" data-nav="new">Yeni gelenler</a></div><div><h4>Komek</h4><a href="#">Catdirilma</a><a href="#">Odenis</a><a href="#">FAQ</a></div><div><h4>Elaqe</h4><p>+994 00 000 00 00</p><p>info@kitabevi.az</p></div></div><div class="container copyright">© 2026 KitabEvi.
+Butun huquqlar qorunur.</div></footer>
   <div class="drawer-backdrop" id="backdrop"></div>
   <aside class="drawer" id="cartDrawer"><div class="drawer-head"><h3>Sebet</h3><button data-close-drawer>×</button></div><div class="drawer-body" id="cartItems"></div><div class="drawer-foot"><div class="total-row"><span>Umumi</span><b id="cartTotal">0.00 AZN</b></div><button class="btn primary full" id="checkoutBtn">Sifarisi tamamla</button><button class="btn secondary full" id="clearCart">Sebeti temizle</button></div></aside>
   <aside class="drawer" id="favDrawer"><div class="drawer-head"><h3>Sevimliler</h3><button data-close-drawer>×</button></div><div class="drawer-body" id="favItems"></div></aside>
-
   <div class="modal" id="bookModal" aria-hidden="true"><div class="modal-card book-modal-card"><button class="modal-close" data-close-modal>×</button><div id="bookModalContent"></div></div></div>
-  <div class="modal" id="checkoutModal" aria-hidden="true"><div class="modal-card checkout-card"><button class="modal-close" data-close-modal>×</button><h2>Sifarisi tamamla</h2><p class="muted">Bu statik demo sifarisi servere gondermir. Forma funksionalligi numune ucundur.</p><form id="checkoutForm" class="checkout-form"><label>Ad ve soyad<input required name="name"></label><label>Telefon<input required name="phone" placeholder="+994..."></label><label>Seher<select name="city"><option>Baki</option><option>Naxcivan</option><option>Gence</option><option>Sumqayit</option><option>Diger</option></select></label><label>Catdirilma unvani<textarea required name="address" rows="3"></textarea></label><label>Odenis<select name="payment"><option>Qapida odenis</option><option>Kartla odenis (demo)</option></select></label><button class="btn primary full">Sifarisi tesdiqle</button></form></div></div>
+  <div class="modal" id="checkoutModal" aria-hidden="true"><div class="modal-card checkout-card"><button class="modal-close" data-close-modal>×</button><h2>Sifarisi tamamla</h2><p class="muted">Bu statik demo sifarisi servere gondermir.
+Forma funksionalligi numune ucundur.</p><form id="checkoutForm" class="checkout-form"><label>Ad ve soyad<input required name="name"></label><label>Telefon<input required name="phone" placeholder="+994..."></label><label>Seher<select name="city"><option>Baki</option><option>Naxcivan</option><option>Gence</option><option>Sumqayit</option><option>Diger</option></select></label><label>Catdirilma unvani<textarea required name="address" rows="3"></textarea></label><label>Odenis<select name="payment"><option>Qapida odenis</option><option>Kartla odenis (demo)</option></select></label><button class="btn primary full">Sifarisi tesdiqle</button></form></div></div>
   <div class="toast" id="toast"></div>
+  <script id="mesud-local-preview-assets">
+(function(){
+  const ROOT = "https://mesudferecov2000.github.io/mesud-kitab-evi/";
+  function fixImage(img){
+    if(!img || img.tagName !== "IMG") return;
+    const raw = img.getAttribute("src") || "";
+    if(/^(?:\.\/)?assets\//i.test(raw)){
+      img.setAttribute("src", ROOT + raw.replace(/^\.\//, ""));
+    }
+  }
+  const observer = new MutationObserver((mutations)=>{
+    for(const m of mutations){
+      if(m.type === "attributes" && m.target.tagName === "IMG") fixImage(m.target);
+      for(const node of m.addedNodes){
+        if(node.nodeType !== 1) continue;
+        if(node.tagName === "IMG") fixImage(node);
+        node.querySelectorAll?.("img").forEach(fixImage);
+      }
+    }
+  });
+  document.addEventListener("DOMContentLoaded", ()=>{
+    document.querySelectorAll("img").forEach(fixImage);
+    observer.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:["src"]});
+  });
+})();
+</script>
+<script src="https://mesudferecov2000.github.io/mesud-kitab-evi/script.js?v=20260910-fixed1"></script>
 
-  <script src="script.js?v=20260830-final4"></script>
+<script id="mesud-120-real-books">
+(function(){
+  const EXTRA_BOOKS_BASE = [{"title":"Kürk Mantolu Madonna","author":"Sabahattin Ali","category":"Klassikler","lang":"TR"},{"title":"Kuyucaklı Yusuf","author":"Sabahattin Ali","category":"Klassikler","lang":"TR"},{"title":"İçimizdeki Şeytan","author":"Sabahattin Ali","category":"Klassikler","lang":"TR"},{"title":"Değirmen","author":"Sabahattin Ali","category":"Klassikler","lang":"TR"},{"title":"Kağnı","author":"Sabahattin Ali","category":"Klassikler","lang":"TR"},{"title":"İnce Memed","author":"Yaşar Kemal","category":"Roman","lang":"TR"},{"title":"Yer Demir Gök Bakır","author":"Yaşar Kemal","category":"Roman","lang":"TR"},{"title":"Ölmez Otu","author":"Yaşar Kemal","category":"Roman","lang":"TR"},{"title":"Teneke","author":"Yaşar Kemal","category":"Roman","lang":"TR"},{"title":"Yılanı Öldürseler","author":"Yaşar Kemal","category":"Roman","lang":"TR"},{"title":"Tutunamayanlar","author":"Oğuz Atay","category":"Roman","lang":"TR"},{"title":"Tehlikeli Oyunlar","author":"Oğuz Atay","category":"Roman","lang":"TR"},{"title":"Bir Bilim Adamının Romanı","author":"Oğuz Atay","category":"Bioqrafiya","lang":"TR"},{"title":"Korkuyu Beklerken","author":"Oğuz Atay","category":"Roman","lang":"TR"},{"title":"Saatleri Ayarlama Enstitüsü","author":"Ahmet Hamdi Tanpınar","category":"Klassikler","lang":"TR"},{"title":"Huzur","author":"Ahmet Hamdi Tanpınar","category":"Klassikler","lang":"TR"},{"title":"Mahur Beste","author":"Ahmet Hamdi Tanpınar","category":"Klassikler","lang":"TR"},{"title":"Beş Şehir","author":"Ahmet Hamdi Tanpınar","category":"Klassikler","lang":"TR"},{"title":"Çalıkuşu","author":"Reşat Nuri Güntekin","category":"Klassikler","lang":"TR"},{"title":"Yaprak Dökümü","author":"Reşat Nuri Güntekin","category":"Klassikler","lang":"TR"},{"title":"Dudaktan Kalbe","author":"Reşat Nuri Güntekin","category":"Klassikler","lang":"TR"},{"title":"Acımak","author":"Reşat Nuri Güntekin","category":"Klassikler","lang":"TR"},{"title":"Dokuzuncu Hariciye Koğuşu","author":"Peyami Safa","category":"Klassikler","lang":"TR"},{"title":"Fatih-Harbiye","author":"Peyami Safa","category":"Klassikler","lang":"TR"},{"title":"Yalnızız","author":"Peyami Safa","category":"Roman","lang":"TR"},{"title":"Matmazel Noraliya'nın Koltuğu","author":"Peyami Safa","category":"Roman","lang":"TR"},{"title":"Benim Adım Kırmızı","author":"Orhan Pamuk","category":"Roman","lang":"TR"},{"title":"Kar","author":"Orhan Pamuk","category":"Roman","lang":"TR"},{"title":"Masumiyet Müzesi","author":"Orhan Pamuk","category":"Roman","lang":"TR"},{"title":"Sessiz Ev","author":"Orhan Pamuk","category":"Roman","lang":"TR"},{"title":"Cevdet Bey ve Oğulları","author":"Orhan Pamuk","category":"Roman","lang":"TR"},{"title":"Aşk","author":"Elif Şafak","category":"Roman","lang":"TR"},{"title":"Baba ve Piç","author":"Elif Şafak","category":"Roman","lang":"TR"},{"title":"İskender","author":"Elif Şafak","category":"Roman","lang":"TR"},{"title":"Ustam ve Ben","author":"Elif Şafak","category":"Roman","lang":"TR"},{"title":"Serenad","author":"Zülfü Livaneli","category":"Roman","lang":"TR"},{"title":"Kardeşimin Hikâyesi","author":"Zülfü Livaneli","category":"Roman","lang":"TR"},{"title":"Huzursuzluk","author":"Zülfü Livaneli","category":"Roman","lang":"TR"},{"title":"Engereğin Gözü","author":"Zülfü Livaneli","category":"Roman","lang":"TR"},{"title":"Mutluluk","author":"Zülfü Livaneli","category":"Roman","lang":"TR"},{"title":"Aylak Adam","author":"Yusuf Atılgan","category":"Klassikler","lang":"TR"},{"title":"Anayurt Oteli","author":"Yusuf Atılgan","category":"Klassikler","lang":"TR"},{"title":"Canistan","author":"Yusuf Atılgan","category":"Roman","lang":"TR"},{"title":"Sevgili Arsız Ölüm","author":"Latife Tekin","category":"Roman","lang":"TR"},{"title":"Berci Kristin Çöp Masalları","author":"Latife Tekin","category":"Roman","lang":"TR"},{"title":"Puslu Kıtalar Atlası","author":"İhsan Oktay Anar","category":"Fantastika","lang":"TR"},{"title":"Kitab-ül Hiyel","author":"İhsan Oktay Anar","category":"Fantastika","lang":"TR"},{"title":"Amat","author":"İhsan Oktay Anar","category":"Fantastika","lang":"TR"},{"title":"Eylül","author":"Mehmet Rauf","category":"Klassikler","lang":"TR"},{"title":"Araba Sevdası","author":"Recaizade Mahmut Ekrem","category":"Klassikler","lang":"TR"},{"title":"Mai ve Siyah","author":"Halit Ziya Uşaklıgil","category":"Klassikler","lang":"TR"},{"title":"Aşk-ı Memnu","author":"Halit Ziya Uşaklıgil","category":"Klassikler","lang":"TR"},{"title":"Ateşten Gömlek","author":"Halide Edib Adıvar","category":"Klassikler","lang":"TR"},{"title":"Sinekli Bakkal","author":"Halide Edib Adıvar","category":"Klassikler","lang":"TR"},{"title":"Handan","author":"Halide Edib Adıvar","category":"Klassikler","lang":"TR"},{"title":"Kuyruklu Yıldız Altında Bir İzdivaç","author":"Hüseyin Rahmi Gürpınar","category":"Klassikler","lang":"TR"},{"title":"Mürebbiye","author":"Hüseyin Rahmi Gürpınar","category":"Klassikler","lang":"TR"},{"title":"Memleketimden İnsan Manzaraları","author":"Nâzım Hikmet","category":"Klassikler","lang":"TR"},{"title":"Zübük","author":"Aziz Nesin","category":"Roman","lang":"TR"},{"title":"Yaşar Ne Yaşar Ne Yaşamaz","author":"Aziz Nesin","category":"Roman","lang":"TR"},{"title":"Dəli Kür","author":"İsmayıl Şıxlı","category":"Klassikler","lang":"AZ"},{"title":"Ölən Dünyam","author":"İsmayıl Şıxlı","category":"Roman","lang":"AZ"},{"title":"Ayrılan Yollar","author":"İsmayıl Şıxlı","category":"Roman","lang":"AZ"},{"title":"Bir Gəncin Manifesti","author":"Mir Cəlal Paşayev","category":"Klassikler","lang":"AZ"},{"title":"Dirilən Adam","author":"Mir Cəlal Paşayev","category":"Klassikler","lang":"AZ"},{"title":"Açıq Kitab","author":"Mir Cəlal Paşayev","category":"Klassikler","lang":"AZ"},{"title":"Qılınc və Qələm","author":"Məmməd Səid Ordubadi","category":"Tarix","lang":"AZ"},{"title":"Dumanlı Təbriz","author":"Məmməd Səid Ordubadi","category":"Tarix","lang":"AZ"},{"title":"Gizli Bakı","author":"Məmməd Səid Ordubadi","category":"Tarix","lang":"AZ"},{"title":"Studentlər","author":"Yusif Vəzir Çəmənzəminli","category":"Klassikler","lang":"AZ"},{"title":"Qızlar Bulağı","author":"Yusif Vəzir Çəmənzəminli","category":"Klassikler","lang":"AZ"},{"title":"İki Od Arasında","author":"Yusif Vəzir Çəmənzəminli","category":"Tarix","lang":"AZ"},{"title":"Bir Cavanın Dəftəri","author":"Yusif Vəzir Çəmənzəminli","category":"Bioqrafiya","lang":"AZ"},{"title":"Danabaş Kəndinin Əhvalatları","author":"Cəlil Məmmədquluzadə","category":"Klassikler","lang":"AZ"},{"title":"Ölülər","author":"Cəlil Məmmədquluzadə","category":"Klassikler","lang":"AZ"},{"title":"Poçt Qutusu","author":"Cəlil Məmmədquluzadə","category":"Klassikler","lang":"AZ"},{"title":"Anamın Kitabı","author":"Cəlil Məmmədquluzadə","category":"Klassikler","lang":"AZ"},{"title":"Hacı Qara","author":"Mirzə Fətəli Axundzadə","category":"Klassikler","lang":"AZ"},{"title":"Müsyö Jordan və Dərviş Məstəli Şah","author":"Mirzə Fətəli Axundzadə","category":"Klassikler","lang":"AZ"},{"title":"Sərgüzəşti-Vəziri-Xani-Lənkəran","author":"Mirzə Fətəli Axundzadə","category":"Klassikler","lang":"AZ"},{"title":"İblis","author":"Hüseyn Cavid","category":"Klassikler","lang":"AZ"},{"title":"Şeyx Sənan","author":"Hüseyn Cavid","category":"Klassikler","lang":"AZ"},{"title":"Peyğəmbər","author":"Hüseyn Cavid","category":"Klassikler","lang":"AZ"},{"title":"Topal Teymur","author":"Hüseyn Cavid","category":"Klassikler","lang":"AZ"},{"title":"Ana","author":"Hüseyn Cavid","category":"Klassikler","lang":"AZ"},{"title":"Sevil","author":"Cəfər Cabbarlı","category":"Klassikler","lang":"AZ"},{"title":"Almaz","author":"Cəfər Cabbarlı","category":"Klassikler","lang":"AZ"},{"title":"Od Gəlini","author":"Cəfər Cabbarlı","category":"Klassikler","lang":"AZ"},{"title":"1905-ci ildə","author":"Cəfər Cabbarlı","category":"Klassikler","lang":"AZ"},{"title":"Aydın","author":"Cəfər Cabbarlı","category":"Klassikler","lang":"AZ"},{"title":"Beşmərtəbəli Evin Altıncı Mərtəbəsi","author":"Anar","category":"Roman","lang":"AZ"},{"title":"Ağ Liman","author":"Anar","category":"Roman","lang":"AZ"},{"title":"Dantenin Yubileyi","author":"Anar","category":"Roman","lang":"AZ"},{"title":"Macal","author":"Anar","category":"Roman","lang":"AZ"},{"title":"Mahmud və Məryəm","author":"Elçin Əfəndiyev","category":"Roman","lang":"AZ"},{"title":"Baş","author":"Elçin Əfəndiyev","category":"Tarix","lang":"AZ"},{"title":"Ağ Dəvə","author":"Elçin Əfəndiyev","category":"Roman","lang":"AZ"},{"title":"Ölüm Hökmü","author":"Elçin Əfəndiyev","category":"Roman","lang":"AZ"},{"title":"Bayraqdar","author":"Elçin Əfəndiyev","category":"Roman","lang":"AZ"},{"title":"Qətl Günü","author":"Yusif Səmədoğlu","category":"Roman","lang":"AZ"},{"title":"Köç","author":"Mövlud Süleymanlı","category":"Roman","lang":"AZ"},{"title":"Dəyirman","author":"Mövlud Süleymanlı","category":"Roman","lang":"AZ"},{"title":"Şeytan","author":"Mövlud Süleymanlı","category":"Roman","lang":"AZ"},{"title":"Sarıköynəklə Valehin Nağılı","author":"İlyas Əfəndiyev","category":"Roman","lang":"AZ"},{"title":"Söyüdlü Arx","author":"İlyas Əfəndiyev","category":"Roman","lang":"AZ"},{"title":"Körpüsalanlar","author":"İlyas Əfəndiyev","category":"Roman","lang":"AZ"},{"title":"Dağlar Arxasında Üç Dost","author":"İlyas Əfəndiyev","category":"Roman","lang":"AZ"},{"title":"Geriyə Baxma, Qoca","author":"İlyas Əfəndiyev","category":"Roman","lang":"AZ"},{"title":"Daş Yuxular","author":"Əkrəm Əylisli","category":"Roman","lang":"AZ"},{"title":"Adamlar və Ağaclar","author":"Əkrəm Əylisli","category":"Roman","lang":"AZ"},{"title":"Leyli və Məcnun","author":"Nizami Gəncəvi","category":"Klassikler","lang":"AZ"},{"title":"Xosrov və Şirin","author":"Nizami Gəncəvi","category":"Klassikler","lang":"AZ"},{"title":"Yeddi Gözəl","author":"Nizami Gəncəvi","category":"Klassikler","lang":"AZ"},{"title":"İsgəndərnamə","author":"Nizami Gəncəvi","category":"Klassikler","lang":"AZ"},{"title":"Hophopnamə","author":"Mirzə Ələkbər Sabir","category":"Klassikler","lang":"AZ"},{"title":"Bahadır və Sona","author":"Nəriman Nərimanov","category":"Klassikler","lang":"AZ"},{"title":"Qorxulu Nağıllar","author":"Süleyman Sani Axundov","category":"Usaq","lang":"AZ"},{"title":"Gülüstani-İrəm","author":"Abbasqulu ağa Bakıxanov","category":"Tarix","lang":"AZ"},{"title":"Qafqaz Günləri","author":"Banin","category":"Bioqrafiya","lang":"AZ"},{"title":"Əli və Nino","author":"Qurban Said","category":"Klassikler","lang":"AZ"}];
+  const startId = 513;
+  const addedBooks = EXTRA_BOOKS_BASE.map((x,idx)=>{
+    const id = startId + idx;
+    const price = Number((11.90 + (idx % 9) * 2.35).toFixed(2));
+    const discount = ((idx + 1) % 5 === 0);
+    const ratingCycle = [4.4,4.6,4.7,4.8,4.5,4.9];
+    return {
+      id,
+      title:x.title,
+      author:x.author,
+      category:x.category,
+      isbn:"-",
+      price,
+      oldPrice:discount ? Number((price * 1.18).toFixed(2)) : null,
+      rating:ratingCycle[idx % ratingCycle.length],
+      stock:((idx + 1) % 19 !== 0),
+      lang:x.lang,
+      new:true,
+      bestseller:((idx + 1) % 3 === 0),
+      discount,
+      description:`${x.title} — ${x.author} müəllifinin tanınmış əsərlərindən biridir. ${x.lang==='TR'?'Türk':'Azərbaycan'} ədəbiyyatı seçməsində təqdim olunur.`,
+      cover:"assets/covers/default.svg",
+      fallback:"assets/covers/default.svg"
+    };
+  });
+
+  // Mövcud 512 kitabı saxlayır, üstünə 120 həqiqi Türk və Azərbaycan kitabı əlavə edir.
+  const existingIds = new Set(BOOKS.map(b=>b.id));
+  addedBooks.forEach(b=>{ if(!existingIds.has(b.id)) BOOKS.push(b); });
+
+  // Köhnə brauzer yaddaşında artıq olmayan kitab id-ləri varsa səhv verməsin.
+  const validIds = new Set(BOOKS.map(b=>b.id));
+  favorites = favorites.filter(id=>validIds.has(Number(id)));
+  recent = recent.filter(id=>validIds.has(Number(id)));
+  Object.keys(cart).forEach(id=>{ if(!validIds.has(Number(id))) delete cart[id]; });
+
+  // Sayğac və siyahıları yenilə.
+  const stat = document.querySelector('.hero-stats div:first-child b');
+  if(stat) stat.textContent = BOOKS.length + '+';
+  save();
+  renderCart();
+  renderFavs();
+  renderRecent();
+  state.page = 1;
+  renderBooks();
+})();
+</script>
+
+
+
+<script id="mesud-guaranteed-covers">
+(function(){
+  const ASSET_BASE='https://mesudferecov2000.github.io/mesud-kitab-evi/';
+
+  function xmlEscape(v){
+    return String(v == null ? '' : v)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&apos;');
+  }
+  function trimText(v,n){
+    v=String(v || '');
+    return v.length>n ? v.slice(0,n-1)+'…' : v;
+  }
+  function guaranteedCover(book){
+    const title=xmlEscape(trimText(book.title,28));
+    const author=xmlEscape(trimText(book.author,24));
+    const category=xmlEscape(trimText(book.category || 'KITAB',18));
+    const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#111827"/>
+          <stop offset="1" stop-color="#374151"/>
+        </linearGradient>
+      </defs>
+      <rect width="600" height="900" rx="22" fill="url(#g)"/>
+      <rect x="34" y="34" width="532" height="832" rx="16" fill="none" stroke="#ffffff" stroke-opacity=".22" stroke-width="2"/>
+      <text x="54" y="105" fill="#fb7185" font-family="Arial,sans-serif" font-size="25" font-weight="700">${category}</text>
+      <line x1="54" y1="132" x2="546" y2="132" stroke="#ffffff" stroke-opacity=".20"/>
+      <text x="300" y="390" text-anchor="middle" fill="#ffffff" font-family="Georgia,serif" font-size="46" font-weight="700">
+        <tspan x="300" dy="0">${title}</tspan>
+      </text>
+      <text x="300" y="535" text-anchor="middle" fill="#d1d5db" font-family="Arial,sans-serif" font-size="28">${author}</text>
+      <text x="300" y="795" text-anchor="middle" fill="#ffffff" fill-opacity=".55" font-family="Arial,sans-serif" font-size="18" letter-spacing="5">KITABEVI</text>
+    </svg>`;
+    return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
+  }
+
+  /* Mövcud kitabları GitHub Pages assetlərinə bağla və hər birinə zəmanətli fallback ver. */
+  if(typeof BOOKS!=='undefined'){
+    BOOKS.forEach(b=>{
+      if(b.cover && /^assets\//.test(b.cover)) b.cover=ASSET_BASE+b.cover;
+      b.fallback=guaranteedCover(b);
+    });
+  }
+
+  /* Əlavə 120 kitab əvvəl default.svg idi. Onların hər birinə ayrıca görünən üzlük ver. */
+  if(typeof addedBooks!=='undefined'){
+    addedBooks.forEach(b=>{
+      const c=guaranteedCover(b);
+      b.cover=c;
+      b.fallback=c;
+    });
+  }
+
+  /* Əlavə kitablar artıq BOOKS-a daxil edilibsə onları da yenilə. */
+  if(typeof BOOKS!=='undefined'){
+    BOOKS.forEach(b=>{
+      if(Number(b.id)>=513){
+        const c=guaranteedCover(b);
+        b.cover=c;
+        b.fallback=c;
+      }
+    });
+  }
+
+  /* Köhnə cache-də qırıq şəkil olsa belə boş qalmasın. */
+  document.querySelectorAll('img[data-book-key]').forEach(img=>{
+    const id=Number(img.closest('[data-id]')?.dataset.id || 0);
+    const b=(typeof BOOKS!=='undefined' && id) ? BOOKS.find(x=>Number(x.id)===id) : null;
+    if(b) img.dataset.fallback=b.fallback;
+  });
+
+  if(typeof renderBooks==='function') renderBooks();
+  if(typeof renderCart==='function') renderCart();
+  if(typeof renderFavs==='function') renderFavs();
+  if(typeof renderRecent==='function') renderRecent();
+})();
+</script>
+
+
+  <!-- Yan alətlərin mövcud funksiyalara qosulmasi -->
+  <script id="mesud-side-tools-script">
+  (function(){
+    const q=(s)=>document.querySelector(s);
+
+    function trigger(selector){
+      const el=q(selector);
+      if(el) el.click();
+    }
+
+    document.addEventListener('click',(e)=>{
+      const btn=e.target.closest('[data-side-action]');
+      if(!btn) return;
+      const action=btn.dataset.sideAction;
+      if(action==='fav') trigger('#favBtn');
+      if(action==='cart') trigger('#cartBtn');
+      if(action==='random') trigger('#randomBtn');
+      if(action==='share') trigger('#shareBtn');
+      if(action==='top') window.scrollTo({top:0,behavior:'smooth'});
+    });
+
+    function syncSideInfo(){
+      const fav=q('#favCount');
+      const cart=q('#cartCount');
+      const sf=q('#sideFavCount');
+      const sc=q('#sideCartCount');
+      if(sf && fav) sf.textContent=fav.textContent || '0';
+      if(sc && cart) sc.textContent=cart.textContent || '0';
+    }
+
+    const observer=new MutationObserver(syncSideInfo);
+    ['#favCount','#cartCount'].forEach((sel)=>{
+      const el=q(sel);
+      if(el) observer.observe(el,{childList:true,subtree:true,characterData:true});
+    });
+    syncSideInfo();
+  })();
+  </script>
 
   <script>
   (function(){
